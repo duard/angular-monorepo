@@ -1,0 +1,114 @@
+import { Component, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Router, RouterOutlet } from '@angular/router';
+import { MoviesFacade } from '@states/movies';
+import { BasicPaginationComponent } from '@shared/ui';
+
+@Component({
+  selector: 'lib-movies-container',
+  standalone: true,
+  imports: [CommonModule, RouterOutlet, BasicPaginationComponent],
+  templateUrl: './movies-container.component.html',
+  styleUrls: ['./movies-container.component.scss'],
+})
+export class MoviesContainerComponent {
+  @Input() pageNum: number = 1;
+  @Input() searchValue: string = 'red';
+  public maxSize: number = 7;
+
+  directionLinks = true;
+  autoHide = false;
+  responsive = true;
+
+  collection: number[] = [];
+
+  selectedMovie$ = this.moviesFacade.selectedMovie$;
+
+  movieItems$ = this.moviesFacade.movieItems$;
+  isLoading$ = this.moviesFacade.isLoading$;
+  error$ = this.moviesFacade.error$;
+
+  pageSize$ = this.moviesFacade.pageSize$;
+  page$ = this.moviesFacade.page$;
+  rows$ = this.moviesFacade.rows$;
+
+  constructor(
+    private readonly moviesFacade: MoviesFacade,
+    private router: Router
+  ) {
+    console.log(`constructor Container Movies`);
+  }
+
+  loadMovies(page: number, search: string) {
+    this.moviesFacade.searchMovie(page, search);
+
+    this.changeURL();
+  }
+
+  onPageChange(value: any) {
+    console.log('pageChange', typeof value, value);
+    this.pageNum = 1;
+    this.searchValue = value;
+    this.changeURL();
+  }
+
+  onSearchMovie(value: any) {
+    console.log('Pesquisando', value);
+  }
+
+  changeURL() {
+    if (this.pageNum && this.searchValue) {
+      this.router.navigateByUrl(
+        `/movies?searchValue=${this.pageNum}&pageNum=${this.searchValue}`
+      );
+    } else {
+      console.log(
+        'changeURL Container Movies loadMovies',
+        `/movies?pageNum=${this.pageNum}&searchValue=${this.searchValue}`
+      );
+    }
+  }
+
+  parentCall() {
+    console.log('Mey parent call me');
+  }
+
+  ngOnChanges() {
+    // console.log(`ngOnChanges - count is ${this.count}`);
+  }
+  ngOnInit() {
+    // console.log(
+    //   'ngOnInit Container Movies',
+    //   `/movies?pageNum=${this.pageNum}&searchValue=${this.searchValue}`
+    // );
+    // this.moviesFacade.searchMovie(this.pageNum, this.searchValue);
+    // this.changeURL();
+    // this.activatedRoute.queryParams.subscribe((params) => {
+    //   this.pageNum = params['pageNum'];
+    //   this.searchValue = params['searchValue'];
+    //   if (this.searchValue) {
+    //     this.form.setValue({
+    //       searchField: this.searchValue,
+    //     });
+    //   }
+    // });
+  }
+  ngDoCheck() {
+    // console.log('ngDoCheck');
+  }
+  ngAfterContentInit() {
+    // console.log('ngAfterContentInit');
+  }
+  ngAfterContentChecked() {
+    // console.log('ngAfterContentChecked');
+  }
+  ngAfterViewInit() {
+    // console.log('ngAfterViewInit');
+  }
+  ngAfterViewChecked() {
+    // console.log('ngAfterViewChecked');
+  }
+  ngOnDestroy() {
+    console.log('ngOnDestroy');
+  }
+}

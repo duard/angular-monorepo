@@ -1,0 +1,19 @@
+<!-- <input  [formControl]="control"  type="text" placeholder="Search" (keyup.enter)="searchValue($event)" /> -->
+
+
+<form [formGroup]="formSearch" #formDirective="ngForm" (ngSubmit)="submitSearch()" class="mb-3">
+  <div class="input-group">
+
+    <input type="text" formControlName="searchField" class="form-control rounded" placeholder="Search"
+      aria-label="Search" aria-describedby="search-addon" required="true" [disabled]="(loading)"
+      [ngClass]="{ 'is-invalid': submitted && f['searchField'].errors }" focus="true" autofocus #fieldToSearch />
+
+    <button type="submit" class="btn btn-primary btn-lg" [disabled]="(loading)!"> Search </button>
+    <button type="button" (click)="resetForm(formSearch, formDirective)" class="btn btn-secondary btn-lg"
+      [disabled]="(loading)"> Reset </button>
+
+
+  </div>
+
+</form>
+

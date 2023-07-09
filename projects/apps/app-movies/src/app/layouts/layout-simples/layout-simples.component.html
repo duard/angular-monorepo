@@ -1,0 +1,23 @@
+<p>layout-simples works!</p>
+<h2>Pass Function Component</h2>
+<h2>Event Emitted {{count}} times</h2>
+<button (click)="onBtnClick($event)" class="btn btn-success">Call Child</button>
+
+<nav>
+  <ng-container *ngFor="let route of currentRoutes">
+    <button *ngIf="route.data?.['show'] && !route.data?.['showChildren']" class="nav-button" size="small"
+      [routerLink]="[route.path]" [title]="route.data?.['title']" routerLinkActive="active"
+      [routerLinkActiveOptions]="{exact: true}" bindScssVariable="hoverColor" [bindScssVariableValue]="hoverColorVar"
+      type="button">
+      <fa-icon [icon]="faCoffee"></fa-icon>{{ route.data?.['navLabel'] }}
+    </button>
+    <button *ngIf="route.data?.['show'] && route.data?.['showChildren']" class="nav-button" size="small"
+      [routerLink]="[route.path]" [title]="route.data?.['title']" routerLinkActive="active">
+      <fa-icon [icon]="faCoffee" bindScssVariable="hoverColor" [bindScssVariableValue]="hoverColorVar"></fa-icon><br>
+      {{ route.data?.['navLabel'] }}
+    </button>
+  </ng-container>
+</nav>
+<hr />
+<aqn-input-search (search)="onSearchMovie($event)" />
+<router-outlet (activate)="onActivate($event)"></router-outlet>

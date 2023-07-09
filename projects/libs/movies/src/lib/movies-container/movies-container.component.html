@@ -1,0 +1,19 @@
+<p>movies-container works!</p>
+
+
+<div class="container" *ngIf="movieItems$ | async as movieItems">
+  <pre>{{movieItems?.length}}</pre>
+  <pre>{{rows$ | async}}</pre>
+  <pre>{{isLoading$ | async}}</pre>
+
+  <aqn-basic-pagination *ngIf="(movieItems$ | async)"
+    [pageNum]="(page$ | async)!"
+    [pageSize]="(10)"
+    [rows]="(rows$ | async)!"
+    [maxPage]="(5)"
+    (pageChange)="onPageChange($event)">
+  </aqn-basic-pagination>
+
+
+</div>
+<router-outlet></router-outlet>

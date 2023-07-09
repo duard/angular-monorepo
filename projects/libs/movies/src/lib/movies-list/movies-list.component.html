@@ -1,0 +1,20 @@
+<p>movies-list works!</p>
+
+<div *ngIf="movieItems$ | async as movies; else loading">
+  <ng-container *ngIf="movies.length && !(isLoading$ | async); else noItems">
+    <ul *ngFor="let item of movies">
+      <li>{{item['Title']}}</li>
+    </ul>
+  </ng-container>
+
+</div>
+
+<ng-content *ngIf="!(isLoading$ | async); else loading"></ng-content>
+
+<ng-template #noItems>No Items!</ng-template>
+<ng-template #loading><strong>We are loaging..</strong></ng-template>
+
+<div class="container" *ngIf="movieItems$ | async as movieItems">
+
+
+</div>
